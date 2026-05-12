@@ -6,7 +6,7 @@
     "dev:client": "cd client && npx vite",
     "dev:server": "cd server && npx tsx watch index.ts",
     "dev": "npx concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "build": "cd client && npm install && npm run build",
+    "build": "npm install && cd client && npm install && npm run build && cd ../server && npm install",
     "start": "cd server && npx tsx index.ts"
   },
   "devDependencies": {
