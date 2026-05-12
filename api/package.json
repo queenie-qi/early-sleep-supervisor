@@ -2,9 +2,5 @@
   "name": "early-sleep-api",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
-  "dependencies": {
-    "@vercel/postgres": "^0.9.0",
-    "nanoid": "^5.0.9"
-  }
+  "type": "module"
 }
