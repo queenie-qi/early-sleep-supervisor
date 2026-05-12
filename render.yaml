@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: early-sleep-supervisor
+    runtime: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: DB_PATH
+        value: /data/data.db
+    disk:
+      name: sqlite-data
+      mountPath: /data
+      sizeGB: 1

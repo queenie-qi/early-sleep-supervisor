@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(lsof:*)",
+      "Bash(kill 10858:*)",
+      "Bash(curl -s http://localhost:3001/api/records/today/1)",
+      "Bash(curl -s -X POST http://localhost:3001/api/records/upload -H 'Content-Type: application/json' -d '{\"userId\":1,\"date\":\"2026-05-12\",\"sleepTime\":\"22:30\"}')",
+      "Bash(curl -s -X POST http://localhost:3001/api/records/upload -H 'Content-Type: application/json' -d '{\"userId\":1,\"date\":\"2026-05-12\",\"sleepTime\":\"23:30\"}')",
+      "Bash(sqlite3:*)",
+      "Bash(curl -s -X POST http://localhost:3001/api/records/upload -H 'Content-Type: application/json' -d '{\"userId\":1,\"date\":\"2026-05-11\",\"sleepTime\":\"00:15\"}')",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'00:15 -> achieved={d[\\\\\"goalAchieved\\\\\"]}'\\)\")",
+      "Bash(curl -s -X POST http://localhost:3001/api/records/upload -H 'Content-Type: application/json' -d '{\"userId\":1,\"date\":\"2026-05-10\",\"sleepTime\":\"01:00\"}')",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'01:00 -> achieved={d[\\\\\"goalAchieved\\\\\"]}'\\)\")",
+      "mcp__plugin_figma_figma__get_design_context",
+      "mcp__plugin_figma_figma__get_metadata",
+      "mcp__plugin_figma_figma__get_screenshot",
+      "mcp__plugin_figma_figma__get_variable_defs",
+      "Bash(xargs kill:*)",
+      "Bash(curl -s -X PUT http://localhost:3001/api/groups/1/target-time -H 'Content-Type: application/json' -d '{\"targetTime\":\"23:30\"}')",
+      "Bash(curl -s http://localhost:5173/)",
+      "Bash(curl:*)",
+      "Bash(npm start:*)"
+    ]
+  }
+}
