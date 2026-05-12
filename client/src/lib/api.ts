@@ -1,4 +1,4 @@
-const BASE_URL = '/api';
+const BASE_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
 
 export async function login(nickname: string) {
   const res = await fetch(`${BASE_URL}/auth/login`, {
@@ -37,11 +37,11 @@ export async function getTodayRecord(userId: number) {
   return res.json();
 }
 
-export async function createGroup(name: string, userId: number) {
+export async function createGroup(name: string, userId: number, targetTime?: string) {
   const res = await fetch(`${BASE_URL}/groups/create`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, userId })
+    body: JSON.stringify({ name, userId, targetTime })
   });
   return res.json();
 }

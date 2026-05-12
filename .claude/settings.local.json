@@ -20,7 +20,10 @@
       "Bash(curl -s -X PUT http://localhost:3001/api/groups/1/target-time -H 'Content-Type: application/json' -d '{\"targetTime\":\"23:30\"}')",
       "Bash(curl -s http://localhost:5173/)",
       "Bash(curl:*)",
-      "Bash(npm start:*)"
+      "Bash(npm start:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
