@@ -1,7 +1,7 @@
 const BASE_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
 
 export async function login(nickname: string) {
-  const res = await fetch(`${BASE_URL}/auth/login`, {
+  const res = await fetch(`${BASE_URL}?path=auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ nickname })
@@ -10,7 +10,7 @@ export async function login(nickname: string) {
 }
 
 export async function updateTargetTime(userId: number, targetTime: string) {
-  const res = await fetch(`${BASE_URL}/auth/target-time`, {
+  const res = await fetch(`${BASE_URL}?path=auth/target-time`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId, targetTime })
@@ -19,7 +19,7 @@ export async function updateTargetTime(userId: number, targetTime: string) {
 }
 
 export async function uploadRecord(userId: number, date: string, sleepTime: string) {
-  const res = await fetch(`${BASE_URL}/records/upload`, {
+  const res = await fetch(`${BASE_URL}?path=records/upload`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId, date, sleepTime })
@@ -28,17 +28,17 @@ export async function uploadRecord(userId: number, date: string, sleepTime: stri
 }
 
 export async function getMonthlyRecords(userId: number, year: number, month: number) {
-  const res = await fetch(`${BASE_URL}/records/monthly/${userId}/${year}/${month}`);
+  const res = await fetch(`${BASE_URL}?path=records/monthly&userId=${userId}&year=${year}&month=${month}`);
   return res.json();
 }
 
 export async function getTodayRecord(userId: number) {
-  const res = await fetch(`${BASE_URL}/records/today/${userId}`);
+  const res = await fetch(`${BASE_URL}?path=records/today&userId=${userId}`);
   return res.json();
 }
 
 export async function createGroup(name: string, userId: number, targetTime?: string) {
-  const res = await fetch(`${BASE_URL}/groups/create`, {
+  const res = await fetch(`${BASE_URL}?path=groups/create`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, userId, targetTime })
@@ -47,7 +47,7 @@ export async function createGroup(name: string, userId: number, targetTime?: str
 }
 
 export async function joinGroup(inviteCode: string, userId: number) {
-  const res = await fetch(`${BASE_URL}/groups/join`, {
+  const res = await fetch(`${BASE_URL}?path=groups/join`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ inviteCode, userId })
@@ -56,21 +56,22 @@ export async function joinGroup(inviteCode: string, userId: number) {
 }
 
 export async function getMyGroups(userId: number) {
-  const res = await fetch(`${BASE_URL}/groups/my/${userId}`);
+  const res = await fetch(`${BASE_URL}?path=groups/my&userId=${userId}`);
   return res.json();
 }
 
 export async function getGroupMembers(groupId: number, month?: string) {
-  const params = month ? `?month=${month}` : '';
-  const res = await fetch(`${BASE_URL}/groups/${groupId}/members${params}`);
+  const params = new URLSearchParams({ path: 'groups/members', groupId: String(groupId) });
+  if (month) params.set('month', month);
+  const res = await fetch(`${BASE_URL}?${params}`);
   return res.json();
 }
 
 export async function updateGroupTargetTime(groupId: number, targetTime: string) {
-  const res = await fetch(`${BASE_URL}/groups/${groupId}/target-time`, {
+  const res = await fetch(`${BASE_URL}?path=groups/target-time`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ targetTime })
+    body: JSON.stringify({ groupId, targetTime })
   });
   return res.json();
 }
