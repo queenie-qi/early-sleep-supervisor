@@ -3,10 +3,17 @@
   "buildCommand": "cd client && npm run build",
   "outputDirectory": "client/dist",
   "framework": "vite",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/index?path=:path*"
+      "src": "/api/(.*)",
+      "dest": "/api/index?path=$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
