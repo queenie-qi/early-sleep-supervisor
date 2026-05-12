@@ -1,4 +1,14 @@
-import { sql } from '@vercel/postgres';
+import { createPool } from '@vercel/postgres';
+
+// Use DATABASE_URL from Neon (fallback to POSTGRES_URL for compatibility)
+const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+export const sql = async (strings, ...values) => {
+  const pool = createPool({ connectionString });
+  const query = strings.reduce((acc, str, i) => acc + str + (values[i] !== undefined ? `$${i + 1}` : ''), '');
+  const result = await pool.query(query, values);
+  return result;
+};
 
 // Initialize database tables
 export async function initDb() {
@@ -56,5 +66,3 @@ export async function initDb() {
     throw error;
   }
 }
-
-export { sql };
