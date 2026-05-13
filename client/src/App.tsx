@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Upload from './pages/Upload';
 import MyRecords from './pages/MyRecords';
 import GroupRecords from './pages/GroupRecords';
@@ -21,26 +21,47 @@ function App() {
     localStorage.setItem('nickname', name);
   };
 
-  if (!userId) {
-    return <Login onLogin={handleLogin} />;
-  }
-
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen font-duo">
-        <div className="flex-1 pb-20">
-          <Routes>
-            <Route path="/" element={<Upload userId={userId} />} />
-            <Route path="/records" element={<MyRecords userId={userId} />} />
-            <Route path="/group" element={<GroupRecords userId={userId} />} />
-            <Route path="/join/:inviteCode" element={<GroupRecords userId={userId} />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </div>
-
-        <BottomNav />
-      </div>
+      {userId ? (
+        <AppContent userId={userId} />
+      ) : (
+        <Routes>
+          <Route path="/join/:inviteCode" element={<Login onLogin={handleLogin} />} />
+          <Route path="*" element={<Login onLogin={handleLogin} />} />
+        </Routes>
+      )}
     </BrowserRouter>
+  );
+}
+
+function AppContent({ userId }: { userId: number }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // 检查是否有待加入的群组（从登录前保存的）
+    const pendingJoinCode = localStorage.getItem('pendingJoinCode');
+    if (pendingJoinCode) {
+      localStorage.removeItem('pendingJoinCode');
+      navigate(`/join/${pendingJoinCode}`);
+    }
+  }, [navigate]);
+
+  return (
+    <div className="flex flex-col min-h-screen font-duo">
+      <div className="flex-1 pb-20">
+        <Routes>
+          <Route path="/" element={<Upload userId={userId} />} />
+          <Route path="/records" element={<MyRecords userId={userId} />} />
+          <Route path="/group" element={<GroupRecords userId={userId} />} />
+          <Route path="/join/:inviteCode" element={<GroupRecords userId={userId} />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
+
+      <BottomNav />
+    </div>
   );
 }
 
