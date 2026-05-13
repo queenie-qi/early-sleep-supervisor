@@ -101,7 +101,7 @@ export default function GroupRecords({ userId }: Props) {
 
   const shareLink = () => {
     if (!selectedGroup) return;
-    const url = `${window.location.origin}/join/${selectedGroup.invite_code}`;
+    const url = `${"https://www.early-sleep-supervisor.asia"}/join/${selectedGroup.invite_code}`;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
       alert('邀请链接已复制，发送给朋友即可加入');
