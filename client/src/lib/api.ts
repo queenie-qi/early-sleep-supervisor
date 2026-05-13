@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
+const BASE_URL = '/api';
 
 export async function login(nickname: string) {
   const res = await fetch(`${BASE_URL}?path=auth/login`, {

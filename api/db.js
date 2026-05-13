@@ -3,6 +3,10 @@ import { neon } from '@neondatabase/serverless';
 // Use DATABASE_URL from Neon
 const connectionString = process.env.DATABASE_URL;
 
+if (!connectionString) {
+  console.error('DATABASE_URL environment variable is not set');
+}
+
 export const sql = neon(connectionString);
 
 // Initialize database tables
